@@ -33,7 +33,7 @@ options >  Restart. Pending your Kindle device and firmware, you may see either
 modal option below.
 
 <div class="flex">
-  <kbd><img src="https://kindlemodding.org/jailbreaking/WinterBreak/reboot.png" width="350px"/></kbd>
+  <kbd><img src="/images/kindle-restart-modal.png" width="350px"/></kbd>
   <kbd><img src="/images/kindle-paperwhite-restart-modal.jpeg" width="350px"/></kbd>
 </div>
 
@@ -47,7 +47,7 @@ modal option below.
 
 Replace files if prompted.
 
-<kbd><img src="https://kindlemodding.org/jailbreaking/WinterBreak/file_list.png" width="650px"/></kbd>
+<kbd><img src="/images/file-browser-listing.png" width="650px"/></kbd>
 
 **Troubleshooting (Mac) - Kindle doesn't appear connected**
 
@@ -154,16 +154,16 @@ Run the Hotfix after every OTA update.
 
 **extracting MRPI**
 
-<kdb><img src="https://kindlemodding.org/jailbreaking/post-jailbreak/installing-kual-mrpi/mrpackages_extensions_folders.png" width="500px"></kdb>
+<kdb><img src="/images/file-browser_mrpackages_extensions_folders.png" width="500px"></kdb>
 
 **extracting KUAL**
 
-<kdb><img src="https://kindlemodding.org/jailbreaking/post-jailbreak/installing-kual-mrpi/kual_install_bin.png" width="500px"></kdb>
+<kdb><img src="/images/file-browser_kual_install_bin.png" width="500px"></kdb>
 
 ### 16. Eject and Disconnect Kindle
 Safely eject (disconnect) and unplug your Kindle.
 
-<kdb><img src="https://kindlemodding.org/jailbreaking/post-jailbreak/installing-kual-mrpi/eject.png" width="350px"></kdb>
+<kdb><img src="/images/file-browser_eject.png" width="350px"></kdb>
 
 ### 17. Run MRPI
 Run MRPI by typing `;log mrpi` into the search bar and pressing enter. Nothing

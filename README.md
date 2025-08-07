@@ -26,7 +26,7 @@ See [JAILBREAK.md](/JAILBREAK.md) for instructions.
 Inside TRMNL visit your BYOD device settings via the top-right > gear cog icon.
 Select your Kindle edition in the Device Model dropdown.
 
-![image](https://github.com/user-attachments/assets/6ed0560b-c74b-4d05-ad82-06c07afd8cf3)
+![](/images/trmnl-device-model.png)
 
 ### 2. Download TRMNL KUAL Package
 Download your TRMNL KUAL package. Log into usetrmnl.com and find your Device ID
