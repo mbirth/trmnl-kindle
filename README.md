@@ -28,6 +28,8 @@ is one of the most advanced free servers.)
 
 See [JAILBREAK.md](/JAILBREAK.md) for instructions.
 
+For easier debugging, you might also want to install [KOSSH](https://github.com/guo-yong-zhi/KOSSH).
+
 ## Install TRMNL
 
 ### 1. Set your device model to Kindle
