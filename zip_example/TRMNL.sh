@@ -148,12 +148,9 @@ while true; do
   fi
 
   eips_debug "Image downloaded OK."
-  eips_debug "Clearing screen to show image..."
+  eips_debug "Now drawing image..."
 
   # 5) Display the downloaded image
-  # Always clear screen before showing the image
-  eips -c
-  sleep 1
   eips -g "$IMAGE_PATH"
 
   # 6) Print full URL & filename below the displayed image only if debug mode is on
