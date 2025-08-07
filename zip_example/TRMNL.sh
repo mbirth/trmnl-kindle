@@ -75,7 +75,7 @@ while true; do
   # 2) Fetch JSON metadata
   BATTERY_VOLTAGE=$(get_kindle_battery)
   RESPONSE="$(
-    curl -s \
+    curl -L -s \
       -H "access-token: $API_KEY" \
       -H "battery-voltage: $BATTERY_VOLTAGE" \
       -H "png-width: $PNG_WIDTH" \
