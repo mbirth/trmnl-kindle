@@ -25,10 +25,6 @@ DEBUG_MODE=false  # Set to true to enable debug messages, false to disable
 TMP_DIR="/tmp/trmnl-kindle"
 mkdir -p "$TMP_DIR"
 
-# Coordinates for displaying the PNG in *pixels*
-DISPLAY_X=75
-DISPLAY_Y=25
-
 # Size of the PNG in *pixels*
 PNG_WIDTH=$(get_kindle_height)
 PNG_HEIGHT=$(get_kindle_width)
@@ -158,7 +154,7 @@ while true; do
   # Always clear screen before showing the image
   eips -c
   sleep 1
-  eips -g "$IMAGE_PATH" -x "$DISPLAY_X" -y "$DISPLAY_Y"
+  eips -g "$IMAGE_PATH"
 
   # 6) Print full URL & filename below the displayed image only if debug mode is on
   if [ "$DEBUG_MODE" = true ]; then
