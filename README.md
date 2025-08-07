@@ -21,7 +21,8 @@ Tested on 10th gen, 12th gen Kindle e-ink displays.
 - Kindle connected to WiFi
 
 `*` - for a 100% free DIY approach, modify our `TRMNL_KINDLE` Zip (Step 19
-below) to point to your own server.
+below) to point to your own server. ([TRMNL BYOS Laravel](https://github.com/usetrmnl/byos_laravel)
+is one of the most advanced free servers.)
 
 ## Jailbreak
 
@@ -87,17 +88,19 @@ Your Kindle is now successfully running TRMNL!
 
 <kdb><img src="/images/trmnl-kindle-alpha-release.jpeg" width="650px"></kdb>
 
-**Troubleshooting JSON error**
+## Troubleshooting
+
+### JSON error
 You may see an error, such as `Fetching JSON... error.. Retry in 60s.` This
 likely means you are still in Airplane Mode. Disble Airplane Mode, then re-open
 KUAL > TRMNL > Start TRMNL.
 
 <kdb><img src="/images/kindle-json-fetch-error.jpeg" width="650px"></kdb>
 
-## Next steps
+### Graphic not displayed
+The Kindle expects a very specific graphics format. You can convert existing
+images using this ImageMagick command:
 
-Our team is working to accommodate multiple Kindle device frame dimensions, open
-source more the TRMNL_KINDLE jailbreak logic for easy extension, and handle
-Kindle device "sleep" screens + redraws.
-
-Issues and PRs welcome!
+```bash
+magick input.jpg -resize 1448x1072! -set colorspace Gray -define png:bit-depth=8 -define png:color-type=0 -rotate 90 output.png
+```
