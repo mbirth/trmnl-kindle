@@ -4,15 +4,24 @@ This is a tool to convert your Kindle into a personal dashboard with TRMNL.
 
 <kdb><img src="/images/trmnl-kindle-alpha-release.jpeg" width="650px"></kdb>
 
-As of June 10, 2025 **this is a beta release**. Issues and PRs are welcome. Tested on 10th gen, 12th gen Kindle e-ink displays.
+As of June 10, 2025 **this is a beta release**. Issues and PRs are welcome.
+Tested on 10th gen, 12th gen Kindle e-ink displays.
+
+> [!IMPORTANT]
+> This fork was optimised specifically for a 10th gen Kindle Paperwhite running
+> firmware **5.15.1.1**. It may not work properly on other Kindles or 10th gen
+> Kindles with a different firmware version.
 
 ## Prerequisites
 - A PC/Mac
-- TRMNL [BYOD license](https://shop.usetrmnl.com/products/byod) **or** [BYOD/S client](https://docs.usetrmnl.com/go/diy/byod-s). No* purchase necessary.
+- TRMNL [BYOD license](https://shop.usetrmnl.com/products/byod) **or**
+  [BYOD/S client](https://docs.usetrmnl.com/go/diy/byod-s). No* purchase
+  necessary.
 - Registered Kindle (5th gen or later)
 - Kindle connected to WiFi
 
-`*` - for a 100% free DIY approach, modify our `TRMNL_KINDLE` Zip (Step 19 below) to point to your own server.
+`*` - for a 100% free DIY approach, modify our `TRMNL_KINDLE` Zip (Step 19
+below) to point to your own server.
 
 ## Jailbreak
 
