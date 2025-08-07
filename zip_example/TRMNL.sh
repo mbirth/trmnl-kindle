@@ -69,7 +69,7 @@ while true; do
   eips_debug "Fetching JSON..."
 
   # 2) Fetch JSON metadata
-  BATTERY_VOLTAGE=$(get_kindle_battery)
+  BATTERY_VOLTAGE=$(cat /sys/class/power_supply/bd71827_bat/capacity)
   RESPONSE="$(
     curl -L -s \
       -H "access-token: $API_KEY" \
