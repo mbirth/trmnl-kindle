@@ -1,5 +1,6 @@
 #!/bin/sh
 source ./utils.sh
+source ./TRMNL.conf
 
 ###############################################################################
 # TRMNL.sh
@@ -14,12 +15,8 @@ source ./utils.sh
 #  7. Loops, sleeping for <refresh_rate> seconds
 ###############################################################################
 #
-# ----------------------------- USER SETTINGS -------------------------------- #
-API_KEY=$(cat apikey.txt)
-BASE_URL="https://trmnl.app"
 RSSI="0"
 USER_AGENT="trmnl-display/0.1.1"
-DEBUG_MODE=false  # Set to true to enable debug messages, false to disable
 
 # Temporary folder to hold downloaded files
 TMP_DIR="/tmp/trmnl-kindle"
@@ -29,8 +26,6 @@ mkdir -p "$TMP_DIR"
 PNG_WIDTH=$(get_kindle_height)
 PNG_HEIGHT=$(get_kindle_width)
 ROTATION=90
-
-# ---------------------------------------------------------------------------- #
 
 # If eips is not found (i.e. running locally), define a no-op stub for testing
 if ! command -v eips >/dev/null 2>&1; then

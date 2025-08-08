@@ -42,48 +42,29 @@ Select your Kindle edition in the Device Model dropdown.
 
 ![](/images/trmnl-device-model.png)
 
-### 2. Download TRMNL KUAL Package
-Download your TRMNL KUAL package. Log into usetrmnl.com and find your Device ID
-by navigating to the top-right dropdown > clicking a device. Your Device ID will
-be in the URL, e.g. `1234`.
+### 2. Configure your API key
+Login to your TRMNL account and grab the API Key associated with your BYOD
+license. In the `zip_example` folder, copy the file `TRMNL.conf.example` to
+`TRMNL.conf` and edit it. Change the value of `API_KEY` to your API key.
 
-Next, construct this URL and visit in a new tab:
-```
-https://usetrmnl.com/devices/<device-id>/kindle/TRMNL_KINDLE.zip
-```
-
-This will download a file, `TRMNL_KINDLE_<date>.zip`.
-
-If you do not have a TRMNL account with BYOD license, you can instead try the
-[zip_example](/zip_example)
-contents and point the URL to your BYOS setup.
-
-### 3. Unzip TRMNL Package
-Do this on your computer.
-
-### 4. Create a new file in the TRMNL_KINDLE folder apikey.txt
-Login to your TRMNL account and grab the API Key associted with your BYOD
-license. Edit the `apikey.txt` in the `TRMNL_KINDLE` directory and make sure
-that it only has your API Key in it
-
-### 5. Connect Kindle to computer
+### 3. Connect Kindle to computer
 Connect USB and enter drag/drop mode.
 
-### 6. Copy TRMNL to Kindle
-Copy the `TRMNL_KINDLE` folder to Kindle’s `extensions` folder. It may be named
-TRMNL_KINDLE_20250415 with a datestamp at the end. 
+### 4. Copy TRMNL to Kindle
+On your Kindle, create a new folder `TRMNL_KINDLE` below the `extensions`
+folder. Then copy the files from `zip_example` into that newly created folder.
 
 <kdb><img src="/images/trmnl-kindle-extension.png" width="500px"></kdb>
 
-### 7. Disconnect Kindle
+### 5. Disconnect Kindle
 Safely eject (disconnect) your Kindle.
 
-### 8. Open KUAL
+### 6. Open KUAL
 Launch KUAL from your Kindle library.
 
 <kdb><img src="/images/kindle-kual-app.jpeg" width="500px"></kdb>
 
-### 9. Start TRMNL
+### 7. Start TRMNL
 - Press the **TRMNL** button, then select **Start TRMNL**.
 
 <kdb><img src="/images/kual-trmnl-app.jpeg" width="650px"></kdb>
