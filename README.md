@@ -11,6 +11,8 @@ Tested on 10th gen, 12th gen Kindle e-ink displays.
 > This fork was optimised specifically for a 10th gen Kindle Paperwhite running
 > firmware **5.15.1.1**. It may not work properly on other Kindles or 10th gen
 > Kindles with a different firmware version.
+>
+> ![Battery discharge comparison](/images/discharge-curve.png)
 
 ## Prerequisites
 - A PC/Mac
