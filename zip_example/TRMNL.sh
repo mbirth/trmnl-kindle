@@ -59,12 +59,15 @@ PNG_WIDTH=$(get_kindle_height)
 PNG_HEIGHT=$(get_kindle_width)
 ROTATION=90
 
+# https://github.com/Ectalite/trmnl-kindle/blob/f67d9cddd460afa02f658c254e9dcc4573b712e4/zip_example/TRMNL.sh#L66
+printlog "Disabling screensaver..."
+lipc-set-prop com.lab126.powerd preventScreenSaver 1
 
 
 
-while true; do
 
 
+while : ; do
 
   # Fetch JSON metadata
   # Required header values: https://github.com/usetrmnl/byos_laravel/blob/6bc74b2c5c95ba9771704ff4c74e8696619872f7/routes/api.php#L16-L43
