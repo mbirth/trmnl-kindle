@@ -94,6 +94,10 @@ for job in ${FROZEN_PROCESSES}; do
   killall -STOP ${job}
 done
 
+# https://github.com/Ectalite/trmnl-kindle/blob/f67d9cddd460afa02f658c254e9dcc4573b712e4/zip_example/TRMNL.sh#L65
+printlog "Setting CPU governor to powersave"
+echo "powersave" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
 # Flash logo box
 eips -s w=386,h=216 -f -x 336 -y 288
 
