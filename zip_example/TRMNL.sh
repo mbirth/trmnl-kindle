@@ -50,6 +50,9 @@ printlog "Check/prepare folder for temporary files..."
 TMP_DIR="/tmp/trmnl-kindle"
 mkdir -p "$TMP_DIR"
 
+printlog "Read MAC address..."
+MAC_ADDRESS=$(cat /sys/class/net/wlan0/address)
+
 # Size of the PNG in *pixels*
 printlog "Read display dimensions..."
 PNG_WIDTH=$(get_kindle_height)
@@ -62,17 +65,23 @@ ROTATION=90
 while true; do
 
 
-  # 1) Indicate the start of a new loop
 
-  # 2) Fetch JSON metadata
-  BATTERY_VOLTAGE=$(cat /sys/class/power_supply/bd71827_bat/capacity)
+  # Fetch JSON metadata
+  # Required header values: https://github.com/usetrmnl/byos_laravel/blob/6bc74b2c5c95ba9771704ff4c74e8696619872f7/routes/api.php#L16-L43
+  BATTERY_PERCENT=$(cat /sys/class/power_supply/bd71827_bat/capacity)
+  BATTERY_VOLTAGE=$(cat /sys/class/power_supply/bd71827_bat/voltage_now)
+  BATTERY_VOLTAGE=$((BATTERY_VOLTAGE / 1000000))
   RESPONSE="$(
     curl -L -s \
+      -H "id: $MAC_ADDRESS" \
       -H "access-token: $API_KEY" \
-      -H "battery-voltage: $BATTERY_VOLTAGE" \
+      -H "battery-percent: $BATTERY_PERCENT" \
+      -H "battery_voltage: $BATTERY_VOLTAGE" \
       -H "png-width: $PNG_WIDTH" \
       -H "png-height: $PNG_HEIGHT" \
+      -H "png-rotation: $ROTATION" \
       -H "rssi: $RSSI" \
+      -H "fw-version: 99.9.9" \
       -A "$USER_AGENT" \
       "${BASE_URL}/api/display"
   )"
@@ -84,12 +93,9 @@ while true; do
     continue
   fi
 
-  # Show part of the JSON in debug (trim if it's too long)
-  SHORT_JSON="$(echo "$RESPONSE" | cut -c1-60)"
 
   # Parse JSON (naive sed approach)
   IMAGE_URL=$(echo "$RESPONSE" | sed -n 's/.*"image_url":"\([^"]*\)".*/\1/p' | sed 's/\\u0026/\&/g')
-
   REFRESH_RATE=$(echo "$RESPONSE" | sed -n 's/.*"refresh_rate":\([^,}]*\).*/\1/p')
   [ -z "$REFRESH_RATE" ] && REFRESH_RATE="60"
 
