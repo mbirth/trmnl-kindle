@@ -1,5 +1,9 @@
 # ----------------------------- USER SETTINGS -------------------------------- #
+
+# Inside TRMNL visit your BYOD device settings via the top-right cog icon
 API_KEY="CHANGE_TO_YOUR_API_KEY"
+
+# URL to your BYOS server, or default: https://trmnl.app
 BASE_URL="https://trmnl.app"
-DEBUG_MODE=false  # Set to true to enable debug messages, false to disable
+
 # ---------------------------------------------------------------------------- #

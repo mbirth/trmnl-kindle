@@ -87,7 +87,7 @@ while true; do
   # Show part of the JSON in debug (trim if it's too long)
   SHORT_JSON="$(echo "$RESPONSE" | cut -c1-60)"
 
-  # 3) Parse JSON (naive sed approach)
+  # Parse JSON (naive sed approach)
   IMAGE_URL=$(echo "$RESPONSE" | sed -n 's/.*"image_url":"\([^"]*\)".*/\1/p' | sed 's/\\u0026/\&/g')
 
   REFRESH_RATE=$(echo "$RESPONSE" | sed -n 's/.*"refresh_rate":\([^,}]*\).*/\1/p')
@@ -100,7 +100,7 @@ while true; do
     continue
   fi
 
-  # --- Extract filename directly from the top-level JSON field if present ---
+  # Extract filename directly from the top-level JSON field if present
   FILENAME=$(echo "$RESPONSE" | sed -n 's/.*"filename":"\([^"]*\)".*/\1/p')
 
   # If the JSON has no "filename" field or is empty, try extracting from the URL
@@ -117,7 +117,7 @@ while true; do
     *) FILENAME="${FILENAME}.png" ;;
   esac
 
-  # 4) Download the image via the proxy endpoint using POST with full JSON
+  # Download the image via the proxy endpoint using POST with full JSON
   IMAGE_PATH="$TMP_DIR/$FILENAME"
   rm -f "$IMAGE_PATH"
 
@@ -134,15 +134,12 @@ while true; do
   fi
 
 
-  # 5) Display the downloaded image
   eips -g "$IMAGE_PATH"
 
-  # 6) Print full URL & filename below the displayed image only if debug mode is on
   if [ "$DEBUG_MODE" = true ]; then
     eips 0 18 "URL: $IMAGE_URL"
     eips 0 19 "File: $IMAGE_PATH"
   fi
 
-  # Optional: show how long we will sleep (only in debug mode)
   sleep "$REFRESH_RATE"
 done
