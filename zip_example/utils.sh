@@ -3,6 +3,9 @@
 # Print text centred
 function printc {
   local len=${#1}
+  if [ "$1" = "-h" ]; then
+    len=${#2}
+  fi
   local halflen=$((len/2))
   local x=$((33-halflen))
   eips $x $PRINTC_Y "$@"
