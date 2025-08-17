@@ -5,3 +5,4 @@ echo "Identifying TRMNL process..."
 PID=$(ps aux | grep TRMNL | grep -v grep | awk '{print $2}')
 echo "Killing PID ${PID}..."
 kill $PID
+cd /mnt/us/extensions/TRMNL_KINDLE/
