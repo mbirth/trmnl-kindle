@@ -5,7 +5,7 @@ function printc {
   local len=${#1}
   local halflen=$((len/2))
   local x=$((33-halflen))
-  eips $x $PRINTC_Y $*
+  eips $x $PRINTC_Y "$@"
   PRINTC_Y=$((PRINTC_Y+1))
 }
 
