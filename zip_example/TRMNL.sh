@@ -39,7 +39,13 @@ eips 29 16 -h "TRMNL.sh"
 source ./TRMNL.conf
 source ./utils.sh
 
+PRINTC_Y=22
+printc "Configured URL:"
+printc "${BASE_URL}"
+
 PRINTC_Y=25; printc "Starting..."
+
+sleep 1
 
 # TODO: Read RSSI via iwconfig or cat /proc/net/wireless
 RSSI="0"
@@ -65,7 +71,13 @@ lipc-set-prop com.lab126.powerd preventScreenSaver 1
 
 
 
+# Flash logo box
+eips -s w=386,h=216 -f -x 336 -y 288
 
+printlog "All done. Starting main loop..."
+
+# Clear screen
+eips -c
 
 IMPRESSIONS=0
 while : ; do
