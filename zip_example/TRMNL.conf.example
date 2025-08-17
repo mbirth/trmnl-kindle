@@ -9,7 +9,7 @@ BASE_URL="https://trmnl.app"
 # After how many impressions to fully redraw the screen
 DEGAUSS_AFTER=100
 
-# Number of seconds to wait before deep sleep (should be 0 in normal use)
-GRACE_PERIOD=0
+# Number of seconds to wait before deep sleep (should be 1 in normal use)
+GRACE_PERIOD=1
 
 # ---------------------------------------------------------------------------- #
