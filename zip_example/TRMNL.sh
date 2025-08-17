@@ -220,7 +220,8 @@ while : ; do
   IMPRESSIONS=$((IMPRESSIONS + 1))
 
   # Downloading + rendering takes about 3 seconds
-  REFRESH_RATE=$((REFRESH_RATE - GRACE_PERIOD - 3))
+  # WiFi reconnect takes about 4-5 seconds
+  REFRESH_RATE=$((REFRESH_RATE - GRACE_PERIOD - 3 - 5))
 
   # Grace period to let everything settle down
   # (And have a chance to SSH and abort during development)
