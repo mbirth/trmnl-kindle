@@ -100,6 +100,9 @@ images using this ImageMagick command:
 magick input.jpg -resize 1448x1072! -set colorspace Gray -define png:bit-depth=8 -define png:color-type=0 -rotate 90 output.png
 ```
 
+### Device hangs / unresponsive
+Restart the Kindle by holding the power button until the backlight comes on or, if it was on already, the screen flashes.
+
 
 Resources
 ---------
