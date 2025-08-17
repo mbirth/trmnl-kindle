@@ -20,6 +20,17 @@ if ! command -v eips >/dev/null 2>&1; then
   }
 fi
 
+# https://github.com/koreader/koreader/blob/c4f9c60742409c8edb2f13c50bbb7ab8d9997218/platform/kindle/koreader.sh#L201-L216
+# check if we are supposed to shut down the Amazon framework
+eips 19 29 -h "Stopping Kindle Framework..."
+# The framework job sends a SIGTERM on stop, trap it so we don't get killed if we were launched by KUAL
+trap "" TERM
+stop lab126_gui
+# NOTE: Let the framework teardown finish, so we don't start before the black screen...
+usleep 1250000
+# And remove the trap like a ninja now!
+trap - TERM
+
 # Splash
 eips -c
 eips -d l=cc,w=384,h=216 -x 336 -y 288
@@ -69,7 +80,19 @@ ROTATION=90
 printlog "Disabling screensaver..."
 lipc-set-prop com.lab126.powerd preventScreenSaver 1
 
+# https://github.com/koreader/koreader/blob/c4f9c60742409c8edb2f13c50bbb7ab8d9997218/platform/kindle/koreader.sh#L284-L287
+# List of services we stop in order to reclaim a tiny sliver of RAM...
+TOGGLED_SERVICES="framework stored webreader kfxreader kfxview todo tmd lipcd rcm archive scanner otav3 otaupd"
+for job in ${TOGGLED_SERVICES}; do
+  printlog "Stopping server ${job}..."
+  stop "${job}"
+done
 
+FROZEN_PROCESSES="awesome cvm volumd"
+for job in ${FROZEN_PROCESSES}; do
+  printlog "Freezing process ${job}..."
+  killall -STOP ${job}
+done
 
 # Flash logo box
 eips -s w=386,h=216 -f -x 336 -y 288
