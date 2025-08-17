@@ -16,6 +16,12 @@ function printlog {
   eips 1 59 "$1"
 }
 
+function degauss {
+  # Flash contents of whole screen, i.e. turn inverted and back to remove artefacts
+  # (or grab attention)
+  eips -s w=1072,h=1448 -f
+}
+
 get_kindle_width() {
   # Run the command and capture its output
   local result=$(eips -i)

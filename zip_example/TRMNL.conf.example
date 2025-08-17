@@ -6,4 +6,7 @@ API_KEY="CHANGE_TO_YOUR_API_KEY"
 # URL to your BYOS server, or default: https://trmnl.app
 BASE_URL="https://trmnl.app"
 
+# After how many impressions to fully redraw the screen
+DEGAUSS_AFTER=100
+
 # ---------------------------------------------------------------------------- #

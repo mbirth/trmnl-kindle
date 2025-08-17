@@ -67,6 +67,7 @@ lipc-set-prop com.lab126.powerd preventScreenSaver 1
 
 
 
+IMPRESSIONS=0
 while : ; do
 
   # Fetch JSON metadata
@@ -143,12 +144,16 @@ while : ; do
   fi
 
 
-  eips -g "$IMAGE_PATH"
-
-  if [ "$DEBUG_MODE" = true ]; then
-    eips 0 18 "URL: $IMAGE_URL"
-    eips 0 19 "File: $IMAGE_PATH"
+  FLASH_FLAG=""
+  if [ "$IMPRESSIONS" -gt "$DEGAUSS_AFTER"]; then
+    FLASH_FLAG="-f"
+    IMPRESSIONS=0
   fi
+
+  # Display the downloaded image
+  eips -g "$IMAGE_PATH" $FLASH_FLAG
+
+  IMPRESSIONS=$((IMPRESSIONS + 1))
 
   sleep "$REFRESH_RATE"
 done
