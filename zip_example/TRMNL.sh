@@ -195,7 +195,10 @@ while : ; do
   IMPRESSIONS=$((IMPRESSIONS + 1))
 
   # Downloading + rendering takes about 3 seconds
-  REFRESH_RATE=$((REFRESH_RATE - 3))
+  REFRESH_RATE=$((REFRESH_RATE - GRACE_PERIOD - 3))
+
+  # Grace period, mostly to have a chance to SSH and abort during development
+  sleep $GRACE_PERIOD
 
   # Deep sleep
   # https://github.com/Ectalite/trmnl-kindle/blob/f67d9cddd460afa02f658c254e9dcc4573b712e4/zip_example/TRMNL.sh#L202-L204
