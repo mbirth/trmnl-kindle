@@ -167,5 +167,8 @@ while : ; do
 
   IMPRESSIONS=$((IMPRESSIONS + 1))
 
+  # Downloading + rendering takes about 3 seconds
+  REFRESH_RATE=$((REFRESH_RATE - 3))
+
   sleep "$REFRESH_RATE"
 done
