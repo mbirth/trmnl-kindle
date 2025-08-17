@@ -108,6 +108,8 @@ eips -c
 
 IMPRESSIONS=0
 while : ; do
+  # Indicator that we're alive
+  eips -d l=00,w=8,h=8 -x 0 -y 0
 
   # Fetch JSON metadata
   # Required header values: https://github.com/usetrmnl/byos_laravel/blob/6bc74b2c5c95ba9771704ff4c74e8696619872f7/routes/api.php#L16-L43
@@ -136,9 +138,11 @@ while : ; do
     continue
   fi
 
+  eips -d l=00,w=8,h=8 -x 0 -y 12
 
   # Parse JSON (naive sed approach)
   IMAGE_URL=$(echo "$RESPONSE" | sed -n 's/.*"image_url":"\([^"]*\)".*/\1/p' | sed 's/\\u0026/\&/g')
+  
   REFRESH_RATE=$(echo "$RESPONSE" | sed -n 's/.*"refresh_rate":\([^,}]*\).*/\1/p')
   [ -z "$REFRESH_RATE" ] && REFRESH_RATE="60"
 
@@ -182,6 +186,7 @@ while : ; do
     continue
   fi
 
+  eips -d l=00,w=8,h=8 -x 0 -y 24
 
   FLASH_FLAG=""
   if [ "$IMPRESSIONS" -gt "$DEGAUSS_AFTER"]; then
