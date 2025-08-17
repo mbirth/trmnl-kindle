@@ -62,6 +62,9 @@ sleep 1
 RSSI="0"
 USER_AGENT="trmnl-display/0.1.1"
 
+printlog "Determine hostname from URL..."
+BASE_HOST=$(echo $BASE_URL | sed -E 's/^https?:\/\/([^/:]+).*$/\1/')
+
 # Temporary folder to hold downloaded files
 printlog "Check/prepare folder for temporary files..."
 TMP_DIR="/tmp/trmnl-kindle"
@@ -110,6 +113,20 @@ IMPRESSIONS=0
 while : ; do
   # Indicator that we're alive
   eips -d l=00,w=8,h=8 -x 0 -y 0
+
+  # Make sure WiFi is ready
+  # https://github.com/Ectalite/trmnl-kindle/blob/f67d9cddd460afa02f658c254e9dcc4573b712e4/zip_example/wait-for-wifi.sh
+  ping_count=0
+  while : ; do
+    ping -c 1 "$BASE_HOST" >/dev/null 2>&1
+    [ $? -eq 0 ] && break 1
+    eips -s w=2,h=2 -f -x 0 -y 0
+    ping_count=$((ping_count + 1))
+    if [ $ping_count -gt 10 ]; then
+      PRINTC_Y=29; printc -h "${BASE_HOST} not pingable. Retrying..."
+    fi
+    usleep 500000
+  done
 
   # Fetch JSON metadata
   # Required header values: https://github.com/usetrmnl/byos_laravel/blob/6bc74b2c5c95ba9771704ff4c74e8696619872f7/routes/api.php#L16-L43
