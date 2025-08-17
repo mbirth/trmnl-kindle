@@ -1,7 +1,4 @@
 #!/bin/sh
-source ./utils.sh
-source ./TRMNL.conf
-
 ###############################################################################
 # TRMNL.sh
 #
@@ -14,7 +11,18 @@ source ./TRMNL.conf
 #  6. Prints the FULL image URL and FULL filename below the displayed image
 #  7. Loops, sleeping for <refresh_rate> seconds
 ###############################################################################
-#
+
+# If eips is not found (i.e. running locally), define a no-op stub for testing
+if ! command -v eips >/dev/null 2>&1; then
+  eips() {
+    # Simply echo to console so you can see what *would* happen on Kindle
+    echo "[eips STUB] $*"
+  }
+fi
+
+source ./TRMNL.conf
+source ./utils.sh
+
 RSSI="0"
 USER_AGENT="trmnl-display/0.1.1"
 
@@ -27,13 +35,6 @@ PNG_WIDTH=$(get_kindle_height)
 PNG_HEIGHT=$(get_kindle_width)
 ROTATION=90
 
-# If eips is not found (i.e. running locally), define a no-op stub for testing
-if ! command -v eips >/dev/null 2>&1; then
-  eips() {
-    # Simply echo to console so you can see what *would* happen on Kindle
-    echo "[eips STUB] $*"
-  }
-fi
 
 # Helper to track a text-based "cursor" for debug lines
 DEBUG_X=0
