@@ -132,7 +132,7 @@ while : ; do
   # Required header values: https://github.com/usetrmnl/byos_laravel/blob/6bc74b2c5c95ba9771704ff4c74e8696619872f7/routes/api.php#L16-L43
   BATTERY_PERCENT=$(cat /sys/class/power_supply/bd71827_bat/capacity)
   BATTERY_VOLTAGE=$(cat /sys/class/power_supply/bd71827_bat/voltage_now)
-  BATTERY_VOLTAGE=$((BATTERY_VOLTAGE / 1000000))
+  BATTERY_VOLTAGE=$(echo "$BATTERY_VOLTAGE 1000000 /p" | dc)
   RESPONSE="$(
     curl -L -s \
       -H "id: $MAC_ADDRESS" \
