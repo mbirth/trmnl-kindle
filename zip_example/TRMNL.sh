@@ -197,5 +197,10 @@ while : ; do
   # Downloading + rendering takes about 3 seconds
   REFRESH_RATE=$((REFRESH_RATE - 3))
 
-  sleep "$REFRESH_RATE"
+  # Deep sleep
+  # https://github.com/Ectalite/trmnl-kindle/blob/f67d9cddd460afa02f658c254e9dcc4573b712e4/zip_example/TRMNL.sh#L202-L204
+  echo 0 > /sys/class/rtc/rtc1/wakealarm
+  echo "+${REFRESH_RATE}" > /sys/class/rtc/rtc1/wakealarm
+  echo "mem" > /sys/power/state
+  #sleep "$REFRESH_RATE"
 done
