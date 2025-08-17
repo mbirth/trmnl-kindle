@@ -21,8 +21,9 @@ if ! command -v eips >/dev/null 2>&1; then
 fi
 
 # https://github.com/koreader/koreader/blob/c4f9c60742409c8edb2f13c50bbb7ab8d9997218/platform/kindle/koreader.sh#L201-L216
-# check if we are supposed to shut down the Amazon framework
-eips 19 29 -h "Stopping Kindle Framework..."
+eips 17 28 -h "                                "
+eips 17 29 -h "  Stopping Kindle Framework...  "
+eips 17 30 -h "                                "
 # The framework job sends a SIGTERM on stop, trap it so we don't get killed if we were launched by KUAL
 trap "" TERM
 stop lab126_gui
