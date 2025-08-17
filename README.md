@@ -1,4 +1,5 @@
-# Turn Your Amazon Kindle into a TRMNL
+Turn Your Amazon Kindle into a TRMNL
+====================================
 
 This is a tool to convert your Kindle into a personal dashboard with TRMNL.
 
@@ -14,7 +15,10 @@ Tested on 10th gen, 12th gen Kindle e-ink displays.
 >
 > ![Battery discharge comparison](/images/discharge-curve.png)
 
-## Prerequisites
+
+Prerequisites
+-------------
+
 - A PC/Mac
 - TRMNL [BYOD license](https://shop.usetrmnl.com/products/byod) **or**
   [BYOD/S client](https://docs.usetrmnl.com/go/diy/byod-s). No* purchase
@@ -26,13 +30,17 @@ Tested on 10th gen, 12th gen Kindle e-ink displays.
 below) to point to your own server. ([TRMNL BYOS Laravel](https://github.com/usetrmnl/byos_laravel)
 is one of the most advanced free servers.)
 
-## Jailbreak
+
+Jailbreak
+---------
 
 See [JAILBREAK.md](/JAILBREAK.md) for instructions.
 
 For easier debugging, you might also want to install [KOSSH](https://github.com/guo-yong-zhi/KOSSH).
 
-## Install TRMNL
+
+Install TRMNL
+-------------
 
 ### 1. Set your device model to Kindle
 (Skip this step if using a BYOS server and do not have a TRMNL account)
@@ -73,7 +81,9 @@ Your Kindle is now successfully running TRMNL!
 
 <kdb><img src="/images/trmnl-kindle-alpha-release.jpeg" width="650px"></kdb>
 
-## Troubleshooting
+
+Troubleshooting
+---------------
 
 ### JSON error
 You may see an error, such as `Fetching JSON... error.. Retry in 60s.` This
@@ -89,3 +99,11 @@ images using this ImageMagick command:
 ```bash
 magick input.jpg -resize 1448x1072! -set colorspace Gray -define png:bit-depth=8 -define png:color-type=0 -rotate 90 output.png
 ```
+
+
+Resources
+---------
+
+* https://wiki.mobileread.com/wiki/Eips
+* https://github.com/koreader/koreader/blob/c4f9c60742409c8edb2f13c50bbb7ab8d9997218/platform/kindle/koreader.sh
+* https://github.com/Ectalite/trmnl-kindle/blob/main/zip_example/TRMNL.sh
