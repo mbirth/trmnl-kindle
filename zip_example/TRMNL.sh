@@ -20,49 +20,49 @@ if ! command -v eips >/dev/null 2>&1; then
   }
 fi
 
+# Splash
+eips -c
+eips -d l=cc,w=384,h=216 -x 336 -y 288
+eips -d l=88,w=320,h=168 -x 368 -y 312
+eips -d l=44,w=256,h=120 -x 400 -y 336
+eips -d l=00,w=192,h=72 -x 432 -y 360
+eips 29 16 -h "TRMNL.sh"
+
+# Kindle Paperwhite 10th gen:
+#   Pixels are 1072 x 1448
+#   Characters are 16 x 24
+#   Text screen is 67 columns (0..66) and 60 lines (0..59)
+#   eips 0 0 X <-- top left corner
+#   eips 33 29 X <-- centre
+#   eips 66 59 X <-- bottom right corner
+
 source ./TRMNL.conf
 source ./utils.sh
 
+PRINTC_Y=25; printc "Starting..."
+
+# TODO: Read RSSI via iwconfig or cat /proc/net/wireless
 RSSI="0"
 USER_AGENT="trmnl-display/0.1.1"
 
 # Temporary folder to hold downloaded files
+printlog "Check/prepare folder for temporary files..."
 TMP_DIR="/tmp/trmnl-kindle"
 mkdir -p "$TMP_DIR"
 
 # Size of the PNG in *pixels*
+printlog "Read display dimensions..."
 PNG_WIDTH=$(get_kindle_height)
 PNG_HEIGHT=$(get_kindle_width)
 ROTATION=90
 
 
-# Helper to track a text-based "cursor" for debug lines
-DEBUG_X=0
-DEBUG_Y=0
 
-# Prints debug lines in text mode at the next (col=DEBUG_X, row=DEBUG_Y)
-# and increments DEBUG_Y for each new line.
-eips_debug() {
-  if [ "$DEBUG_MODE" = true ]; then
-    eips "${DEBUG_X}" "${DEBUG_Y}" "$1"
-    echo "$1" #Also echo to terminal
-    DEBUG_Y=$((DEBUG_Y+1))
-  fi
-}
 
 while true; do
-  # Clear the screen only if in debug mode, otherwise clear right before displaying the image
-  if [ "$DEBUG_MODE" = true ]; then
-    eips -c
-    sleep 1
-  fi
 
-  # Reset debug text row
-  DEBUG_Y=0
 
   # 1) Indicate the start of a new loop
-  eips_debug "TRMNL Kindle Debug Script"
-  eips_debug "Fetching JSON..."
 
   # 2) Fetch JSON metadata
   BATTERY_VOLTAGE=$(cat /sys/class/power_supply/bd71827_bat/capacity)
@@ -79,27 +79,23 @@ while true; do
 
   # If no response, display error and retry
   if [ -z "$RESPONSE" ]; then
-    eips_debug "Error: No JSON response."
-    eips_debug "Retry in 60s..."
+    PRINTC_Y=22; printc -h "ERROR: Empty answer from server. Retry in 60s..."
     sleep 60
     continue
   fi
 
   # Show part of the JSON in debug (trim if it's too long)
   SHORT_JSON="$(echo "$RESPONSE" | cut -c1-60)"
-  eips_debug "JSON: ${SHORT_JSON}..."
 
   # 3) Parse JSON (naive sed approach)
   IMAGE_URL=$(echo "$RESPONSE" | sed -n 's/.*"image_url":"\([^"]*\)".*/\1/p' | sed 's/\\u0026/\&/g')
-  eips_debug "ORIGINAL_URL: ${IMAGE_URL}"
 
   REFRESH_RATE=$(echo "$RESPONSE" | sed -n 's/.*"refresh_rate":\([^,}]*\).*/\1/p')
   [ -z "$REFRESH_RATE" ] && REFRESH_RATE="60"
 
   # Quick check for missing URL
   if [ -z "$IMAGE_URL" ]; then
-    eips_debug "Error: Unable to parse image_url from JSON."
-    eips_debug "Retry in 60s..."
+    PRINTC_Y=23; printc -h "ERROR: Unable to parse image_url from JSON. Retry in 60s..."
     sleep 60
     continue
   fi
@@ -121,14 +117,9 @@ while true; do
     *) FILENAME="${FILENAME}.png" ;;
   esac
 
-  eips_debug "Parsed URL: $IMAGE_URL"
-  eips_debug "Parsed File: $FILENAME"
-  eips_debug "Refresh: ${REFRESH_RATE}s"
-
   # 4) Download the image via the proxy endpoint using POST with full JSON
   IMAGE_PATH="$TMP_DIR/$FILENAME"
   rm -f "$IMAGE_PATH"
-  eips_debug "Downloading image..."
 
   # Download the image directly from IMAGE_URL
   curl -s -o "$IMAGE_PATH" \
@@ -137,14 +128,11 @@ while true; do
 
   # Check download success
   if [ ! -s "$IMAGE_PATH" ]; then
-    eips_debug "Error: Download failed!"
-    eips_debug "Retry in 60s..."
+    PRINTC_Y=24; printc -h "ERROR: Image download failed. Retry in 60s..."
     sleep 60
     continue
   fi
 
-  eips_debug "Image downloaded OK."
-  eips_debug "Now drawing image..."
 
   # 5) Display the downloaded image
   eips -g "$IMAGE_PATH"
@@ -156,6 +144,5 @@ while true; do
   fi
 
   # Optional: show how long we will sleep (only in debug mode)
-  eips_debug "Sleeping for $REFRESH_RATE seconds..."
   sleep "$REFRESH_RATE"
 done
