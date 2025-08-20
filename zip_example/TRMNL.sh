@@ -210,7 +210,7 @@ while : ; do
   eips -d l=00,w=8,h=8 -x 0 -y 24
 
   FLASH_FLAG=""
-  if [ "$IMPRESSIONS" -gt "$DEGAUSS_AFTER"]; then
+  if [ "$IMPRESSIONS" -gt "$DEGAUSS_AFTER" ]; then
     FLASH_FLAG="-f"
     IMPRESSIONS=0
   fi
