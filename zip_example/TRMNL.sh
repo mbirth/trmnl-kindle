@@ -114,6 +114,13 @@ while : ; do
   # Indicator that we're alive
   eips -d l=00,w=8,h=8 -x 0 -y 0
 
+  sleep 1
+  #start wifid
+  lipc-set-prop com.lab126.cmd wirelessEnable 1
+
+  # Time for WiFi to reacquire signal
+  sleep 3
+
   # Make sure WiFi is ready
   # https://github.com/Ectalite/trmnl-kindle/blob/f67d9cddd460afa02f658c254e9dcc4573b712e4/zip_example/wait-for-wifi.sh
   ping_count=0
@@ -124,6 +131,13 @@ while : ; do
     ping_count=$((ping_count + 1))
     if [ $ping_count -gt 20 ]; then
       PRINTC_Y=29; printc -h "${BASE_HOST} not pingable. Retrying..."
+      # Toggle WiFi
+      #stop wifid
+      lipc-set-prop com.lab126.cmd wirelessEnable 0
+      sleep 1
+      #start wifid
+      lipc-set-prop com.lab126.cmd wirelessEnable 1
+      ping_count=0
     fi
     sleep 1
   done
@@ -221,7 +235,7 @@ while : ; do
 
   # Downloading + rendering takes about 3 seconds
   # WiFi reconnect takes about 4-5 seconds
-  REFRESH_RATE=$((REFRESH_RATE - GRACE_PERIOD - 3 - 5))
+  REFRESH_RATE=$((REFRESH_RATE - GRACE_PERIOD - 3 - 3 - 5))
 
   # Grace period to let everything settle down
   # (And have a chance to SSH and abort during development)
@@ -229,6 +243,11 @@ while : ; do
 
   # Clear grace period indicator
   eips -d l=ff,w=8,h=8 -x 0 -y 36
+
+  # Stop WiFi
+  #stop wifid
+  lipc-set-prop com.lab126.cmd wirelessEnable 0
+  sleep 2
 
   # Deep sleep
   # https://github.com/Ectalite/trmnl-kindle/blob/f67d9cddd460afa02f658c254e9dcc4573b712e4/zip_example/TRMNL.sh#L202-L204
