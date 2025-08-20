@@ -124,7 +124,7 @@ while : ; do
   while : ; do
     ping -c 1 "$BASE_HOST" >/dev/null 2>&1
     [ $? -eq 0 ] && break 1
-    eips -s w=2,h=2 -f -x 0 -y 0
+    eips -s w=8,h=8 -f -x 0 -y 0
     ping_count=$((ping_count + 1))
     if [ $ping_count -gt 10 ]; then
       PRINTC_Y=29; printc -h "${BASE_HOST} not pingable. Retrying..."
