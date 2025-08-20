@@ -8,21 +8,21 @@ function printc {
   fi
   local halflen=$((len/2))
   local x=$((33-halflen))
-  eips $x $PRINTC_Y "$@"
+  eips $x $PRINTC_Y "$@" >/dev/null
   PRINTC_Y=$((PRINTC_Y+1))
 }
 
 function printlog {
   # Scroll feature calculates 72 rows, params: <start_row> <num_rows>
   # Scrolls only 24 pixels, not leaving a space between lines
-  eips -z 50 22
-  eips 1 59 "$1"
+  eips -z 50 22 >/dev/null
+  eips 1 59 "$1" >/dev/null
 }
 
 function degauss {
   # Flash contents of whole screen, i.e. turn inverted and back to remove artefacts
   # (or grab attention)
-  eips -s w=1072,h=1448 -f
+  eips -s w=1072,h=1448 -f >/dev/null
 }
 
 get_kindle_width() {
