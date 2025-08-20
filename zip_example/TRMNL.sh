@@ -98,10 +98,6 @@ for job in ${FROZEN_PROCESSES}; do
   killall -STOP ${job}
 done
 
-# https://github.com/Ectalite/trmnl-kindle/blob/f67d9cddd460afa02f658c254e9dcc4573b712e4/zip_example/TRMNL.sh#L65
-printlog "Setting CPU governor to powersave"
-echo "powersave" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-
 printlog "Setting display frontlight to ${BRIGHTNESS}..."
 lipc-set-prop com.lab126.powerd flIntensity $BRIGHTNESS
 
