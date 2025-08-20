@@ -122,10 +122,10 @@ while : ; do
     [ $? -eq 0 ] && break 1
     eips -s w=8,h=8 -f -x 0 -y 0
     ping_count=$((ping_count + 1))
-    if [ $ping_count -gt 10 ]; then
+    if [ $ping_count -gt 20 ]; then
       PRINTC_Y=29; printc -h "${BASE_HOST} not pingable. Retrying..."
     fi
-    usleep 500000
+    sleep 1
   done
 
   # Fetch JSON metadata
