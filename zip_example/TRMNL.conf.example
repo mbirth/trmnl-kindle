@@ -9,6 +9,9 @@ BASE_URL="https://trmnl.app"
 # After how many impressions to fully redraw the screen
 DEGAUSS_AFTER=100
 
+# Display brightness (0..24) - should be 0 when not connected to USB
+BRIGHTNESS=0
+
 # Number of seconds to wait before deep sleep (should be 1 in normal use)
 GRACE_PERIOD=1
 

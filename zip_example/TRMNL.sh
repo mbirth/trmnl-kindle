@@ -102,6 +102,9 @@ done
 printlog "Setting CPU governor to powersave"
 echo "powersave" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
 
+printlog "Setting display frontlight to ${BRIGHTNESS}..."
+lipc-set-prop com.lab126.powerd flIntensity $BRIGHTNESS
+
 # Flash logo box
 eips -s w=386,h=216 -f -x 336 -y 288
 
