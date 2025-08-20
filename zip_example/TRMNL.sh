@@ -86,13 +86,13 @@ lipc-set-prop com.lab126.powerd preventScreenSaver 1
 
 # https://github.com/koreader/koreader/blob/c4f9c60742409c8edb2f13c50bbb7ab8d9997218/platform/kindle/koreader.sh#L284-L287
 # List of services we stop in order to reclaim a tiny sliver of RAM...
-TOGGLED_SERVICES="framework stored webreader kfxreader kfxview todo tmd lipcd rcm archive scanner otav3 otaupd"
+TOGGLED_SERVICES="framework stored webreader kfxreader kfxview todo tmd lipcd rcm archive scanner otav3 otaupd volumd"
 for job in ${TOGGLED_SERVICES}; do
   printlog "Stopping server ${job}..."
   stop "${job}"
 done
 
-FROZEN_PROCESSES="awesome cvm volumd"
+FROZEN_PROCESSES="awesome cvm"
 for job in ${FROZEN_PROCESSES}; do
   printlog "Freezing process ${job}..."
   killall -STOP ${job}
