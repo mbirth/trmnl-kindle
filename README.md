@@ -9,9 +9,9 @@ As of June 10, 2025 **this is a beta release**. Issues and PRs are welcome.
 Tested on 10th gen, 12th gen Kindle e-ink displays.
 
 > [!IMPORTANT]
-> This fork was optimised specifically for a 10th gen Kindle Paperwhite running
-> firmware **5.15.1.1**. It may not work properly on other Kindles or 10th gen
-> Kindles with a different firmware version.
+> This fork was optimised specifically for a 10th gen Kindle Paperwhite
+> (`moonshine`) running firmware **5.15.1.1**. It may not work properly on
+> other Kindles or 10th gen Kindles with a different firmware version.
 >
 > ![Battery discharge comparison](/images/discharge-curve.png)
 
@@ -104,9 +104,21 @@ magick input.jpg -resize 1448x1072! -set colorspace Gray -define png:bit-depth=8
 Restart the Kindle by holding the power button until the backlight comes on or, if it was on already, the screen flashes.
 
 
+Technical Insights
+------------------
+
+I've collected a few insights from tinkering with my Kindle Paperwhite 10th gen. here: [INSIGHTS.md](/INSIGHTS.md)
+
+
 Resources
 ---------
 
 * https://wiki.mobileread.com/wiki/Eips
 * https://github.com/koreader/koreader/blob/c4f9c60742409c8edb2f13c50bbb7ab8d9997218/platform/kindle/koreader.sh
 * https://github.com/Ectalite/trmnl-kindle/blob/main/zip_example/TRMNL.sh
+* https://forum.fhem.de/index.php/topic,21821.0.html
+* https://wiki.fhem.de/wiki/Kindle_Display
+  * https://www.mobileread.com/forums/showthread.php?t=236104
+  * https://www.mobileread.com/forums/showpost.php?p=4330142&postcount=93
+  * https://github.com/64bits/Little-Langtale/tree/main/onlinescreensaver
+  * https://github.com/avhm/onlinescreensaverPW2
