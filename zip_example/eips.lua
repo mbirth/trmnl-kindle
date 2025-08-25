@@ -46,10 +46,10 @@ function eips.flash(x, y, w, h)
 end
 
 --- Draws a rectangle in a specific shade of grey on the screen
---- @param x integer X coordinate (0..1071)
---- @param y integer Y coordinate (0..1447)
---- @param w integer Rectangle width
---- @param h integer Rectangle height
+--- @param x integer X coordinate in pixels (0..1071)
+--- @param y integer Y coordinate in pixels (0..1447)
+--- @param w integer Rectangle width in pixels
+--- @param h integer Rectangle height in pixels
 --- @param grey integer Greyscale level (black 0..255 white)
 function eips.drawxy(x, y, w, h, grey)
     local cmd = "eips -d l=" .. string.format("%x", grey) .. ",w=" .. w .. ",h=" .. h .. " -x " .. x .. " -y " .. y .. " >/dev/null"

@@ -42,6 +42,7 @@ end
 
 --- Stops the Kindle Framework job
 function kindle.stopFramework()
+    -- The framework job sends a SIGTERM on stop, trap it so we don't get killed
     os.execute('trap "" TERM; stop lab126_gui; usleep 1250000; trap - TERM')
 end
 
@@ -63,5 +64,41 @@ function kindle.stopProcess(processname)
     os.execute("killall -STOP " .. processname)
 end
 
+--- Enables WiFi
+function kindle.enableWifi()
+    os.execute("lipc-set-prop com.lab126.cmd wirelessEnable 1")
+    -- Alternative: start wifid
+    -- Alternative: lipc-set-prop com.lab126.wifid enable 1
+end
+
+--- Disables WiFi
+function kindle.disableWifi()
+    os.execute("lipc-set-prop com.lab126.cmd wirelessEnable 0")
+    -- Alternative: stop wifid
+    -- Alternative: lipc-set-prop com.lab126.wifid enable 0
+end
+
+--- Returns the battery capacity in percent
+--- @return integer
+function kindle.getBatteryPercent()
+    ---@type file*
+    local f = io.input("/sys/class/power_supply/bd71827_bat/capacity")
+    ---@type integer
+    local batteryPercent = tonumber(f:read("*a"))
+    f:close()
+    return batteryPercent
+end
+
+--- Returns the battery voltage
+--- @return number
+function kindle.getBatteryVoltage()
+    ---@type file*
+    local f = io.input("/sys/class/power_supply/bd71827_bat/voltage_now")
+    ---@type number
+    local batteryVoltage = tonumber(f:read("*a"))
+    batteryVoltage = batteryVoltage / 1000000
+    f:close()
+    return batteryVoltage
+end
 
 return kindle

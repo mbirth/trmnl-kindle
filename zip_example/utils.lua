@@ -29,4 +29,21 @@ function utils.strim(s)
     return s:match("^%s*(.*%S)")
 end
 
+--- Pings the given host until reachable or the number of retries is reached
+--- @param hostname string Hostname to ping
+--- @param tries integer Number of tries (Default: 1)
+--- @param callback function Callback to run after each unsuccessful ping
+--- @return boolean # TRUE if host was reached, FALSE if host wasn't reachable
+function utils.pingWait(hostname, tries, callback)
+    tries = tries or 1
+    repeat
+        local exitcode = os.execute('ping -c 1 "' .. hostname .. '" >/dev/null 2>&1')
+        if exitcode == 0 then return true end
+        if callback then callback() end
+        tries = tries - 1
+        if tries > 0 then utils.sleep(1) end
+    until tries == 0
+    return false
+end
+
 return utils
