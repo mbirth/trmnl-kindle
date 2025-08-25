@@ -1,0 +1,14 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "#!\/bin\/sh\necho Running task $NOVA_TASK_NAME\ncd \/mnt\/us\/extensions\/TRMNL_KINDLE\/\necho Launching $NOVA_FILE_NAME\n.\/$NOVA_FILE_NAME\n",
+      "shell" : "\/bin\/sh"
+    }
+  },
+  "environment" : {
+    "NOVA_FILE_NAME" : "${FileBasename}"
+  },
+  "openLogOnRun" : "start",
+  "serverName" : "Kindle SSH"
+}
