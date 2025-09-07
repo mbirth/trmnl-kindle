@@ -37,9 +37,7 @@ eips.printc(25, "Starting...")
 
 -- Load config file
 local config = {
-    USER_AGENT = "trmnl-display/0.1.1",
-    TMP_DIR = "/tmp/trmnl-kindle",
-    TRMNL_ROTATION = 90
+    TMP_DIR = "/tmp/trmnl-kindle"
 }
 for line in io.lines("TRMNL.conf") do
     local k, v = line:match('^%s*([^ =]+)%s*=%s*"?([^"]+)"?%s*$')
@@ -48,6 +46,9 @@ for line in io.lines("TRMNL.conf") do
         config[k] = utils.strim(v)
     end
 end
+
+-- Fix vartypes
+config.DEGAUSS_AFTER = tonumber(config.DEGAUSS_AFTER)
 
 eips.printc(22, "Configured URL:")
 eips.printc(23, config.BASE_URL)
@@ -84,8 +85,12 @@ end
 eips.printlog("Setting display frontlight brightness to " .. config.BRIGHTNESS .. "...")
 kindle.setBrightness(config.BRIGHTNESS)
 
+eips.printlog("Determining display details...")
+local displayInfo = eips.info()
+
 eips.printlog("Initialise TRMNL object...")
-local trmnl = TrmnlApi.new(config.BASE_URL)
+local trmnl = TrmnlApi.new(config.BASE_URL, config.API_KEY, config.MAC_ADDRESS)
+trmnl:setDisplayDimensions(displayInfo.yres, displayInfo.xres, 90)   -- swap width/height and set 90deg rotation
 trmnl:setBatteryCapacityCallback(function() return kindle.getBatteryPercent() end)
 trmnl:setBatteryVoltageCallback(function() return kindle.getBatteryVoltage() end)
 
@@ -124,14 +129,20 @@ while true do
     -- Indicate successful connection
     eips.drawxy(0, 12, 8, 8, 0)
 
-    trmnl:batteryDebug()
+    -- Load next image metadata from TRMNL server
+    local dispInfo = trmnl:getDisplayInfo()
+    local refreshRate = 0
+    if dispInfo then
+        -- Indicate successful query
+        eips.drawxy(0, 24, 8, 8, 0)
+
+
+
+
+    end
 
 
     -- DEBUG: STOP
     os.exit(0)
 
 end
-
-
-
-eips.degauss()
