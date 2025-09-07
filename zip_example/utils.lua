@@ -17,7 +17,7 @@ end
 --- @param tbl table Table to print
 function utils.printTable(tbl)
     for k, v in pairs(tbl) do
-        print(k .. " = " .. v)
+        print(k .. " = " .. v .. " (" .. type(v) .. ")")
     end
 end
 
@@ -27,6 +27,27 @@ end
 --- @return string # Input string with leading and trailing whitespaces removed
 function utils.strim(s)
     return s:match("^%s*(.*%S)")
+end
+
+--- Reads keys and values from the specified config file
+--- @param filename string Filepath to read from
+--- @param defaults table Default values (optional)
+function utils.importConfig(filename, defaults)
+    if not defaults then
+        defaults = {}
+    end
+    for line in io.lines(filename) do
+        local k, v = line:match('^%s*([^ =]+)%s*=%s*"?([^"]+)"?%s*$')
+        if k ~= nil then
+            k = utils.strim(k)
+            v = utils.strim(v)
+            if tonumber(v) then
+                v = tonumber(v)
+            end
+            defaults[k] = v
+        end
+    end
+    return defaults
 end
 
 --- Pings the given host until reachable or the number of retries is reached

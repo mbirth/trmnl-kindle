@@ -39,16 +39,7 @@ eips.printc(25, "Starting...")
 local config = {
     TMP_DIR = "/tmp/trmnl-kindle"
 }
-for line in io.lines("TRMNL.conf") do
-    local k, v = line:match('^%s*([^ =]+)%s*=%s*"?([^"]+)"?%s*$')
-    if k ~= nil then
-        k = utils.strim(k)
-        config[k] = utils.strim(v)
-    end
-end
-
--- Fix vartypes
-config.DEGAUSS_AFTER = tonumber(config.DEGAUSS_AFTER)
+config = utils.importConfig("TRMNL.conf", config)
 
 eips.printc(22, "Configured URL:")
 eips.printc(23, config.BASE_URL)
