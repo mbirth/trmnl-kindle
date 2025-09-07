@@ -13,6 +13,17 @@ function utils.msleep(msecs)
     os.execute("usleep " .. usecs)
 end
 
+--- Returns the complete contents of the specified file
+--- @param filename string
+--- @return string
+function utils.readfile(filename)
+    ---@type file*
+    local f = io.input(filename)
+    local contents = f:read("*a")
+    f:close()
+    return contents
+end
+
 --- Prints all members of a table and their values
 --- @param tbl table Table to print
 function utils.printTable(tbl)

@@ -21,6 +21,12 @@ kindle._maxBrightnessCache = nil
 ---@type string
 kindle._defaultGatewayCache = nil
 
+--- Returns the MAC address of the wlan0 network adapter
+--- @return string
+function kindle.getMacAddress()
+    return utils.strim(utils.readfile("/sys/class/net/wlan0/address"))
+end
+
 --- Returns the maximum brightness level allowed on this Kindle
 --- @return integer # Maximum brightness level
 --- @diagnostic disable: need-check-nil
@@ -86,23 +92,14 @@ end
 --- @return integer
 --- @diagnostic disable: assign-type-mismatch, return-type-mismatch
 function kindle.getBatteryPercent()
-    ---@type file*
-    local f = io.input("/sys/class/power_supply/bd71827_bat/capacity")
-    local batteryPercent = tonumber(f:read("*a"))
-    f:close()
-    return batteryPercent
+    return tonumber(utils.readfile("/sys/class/power_supply/bd71827_bat/capacity"))
 end
 
 --- Returns the battery voltage
 --- @return number
 --- @diagnostic disable: assign-type-mismatch, return-type-mismatch
 function kindle.getBatteryVoltage()
-    ---@type file*
-    local f = io.input("/sys/class/power_supply/bd71827_bat/voltage_now")
-    local batteryVoltage = tonumber(f:read("*a"))
-    batteryVoltage = batteryVoltage / 1000000
-    f:close()
-    return batteryVoltage
+    return (tonumber(utils.readfile("/sys/class/power_supply/bd71827_bat/voltage_now")) / 1000000)
 end
 
 --- Hibernate for the given number of seconds

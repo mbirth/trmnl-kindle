@@ -52,11 +52,9 @@ config.BASE_HOST = config.BASE_URL:match("https?://([^/:]+)")
 eips.printlog("Check/prepare folder for temporary files...")
 os.execute('mkdir -p "' .. config.TMP_DIR .. '"')
 
+-- Get MAC address for TRMNL-identity
 eips.printlog("Read MAC address...")
----@type file*
-local f = io.input("/sys/class/net/wlan0/address")
-config.MAC_ADDRESS = utils.strim(f:read("*a"))
-f:close()
+local macAddress = kindle.getMacAddress()
 
 eips.printlog("Disable screensaver...")
 kindle.disableScreensaver()
@@ -80,7 +78,7 @@ eips.printlog("Determining display details...")
 local displayInfo = eips.info()
 
 eips.printlog("Initialise TRMNL object...")
-local trmnl = TrmnlApi.new(config.BASE_URL, config.API_KEY, config.MAC_ADDRESS)
+local trmnl = TrmnlApi.new(config.BASE_URL, config.API_KEY, macAddress)
 trmnl:setDisplayDimensions(displayInfo.yres, displayInfo.xres, 90)   -- swap width/height and set 90deg rotation
 trmnl:setBatteryCapacityCallback(function() return kindle.getBatteryPercent() end)
 trmnl:setBatteryVoltageCallback(function() return kindle.getBatteryVoltage() end)
