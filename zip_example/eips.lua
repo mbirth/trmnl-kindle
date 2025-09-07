@@ -84,6 +84,7 @@ function eips.print(row, col, text, inverse)
     end
     cmd = cmd .. " \"" .. text .. "\" >/dev/null"
     os.execute(cmd)
+    print("[OUT:" .. tostring(row) .. "," .. tostring(col) .. "] " .. text)
 end
 
 --- Prints text centred at the specified row
@@ -105,7 +106,6 @@ function eips.printlog(text, inverse)
     -- Scrolls only 23 pixels, not leaving a space between lines. Width is in pixels.
     os.execute("eips -z 50 22 >/dev/null")
     eips.print(59, 1, text, inverse)
-    print("[LOG] " .. text)   -- also output to console
 end
 
 --- Renders the given PNG file onto the screen
