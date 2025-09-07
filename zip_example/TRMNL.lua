@@ -60,13 +60,13 @@ eips.printlog("Disable screensaver...")
 kindle.disableScreensaver()
 
 -- Stop Kindle services
-for i, svcName in ipairs(kindle.stopServices) do
+for _, svcName in ipairs(kindle.stopServices) do
 	eips.printlog("Stopping service " .. svcName .. "...")
     -- kindle.stopService(svcName)
 end
 
 -- Stop Kindle processes
-for i, procName in ipairs(kindle.stopProcesses) do
+for _, procName in ipairs(kindle.stopProcesses) do
 	eips.printlog("Stopping process " .. procName .. "...")
     -- kindle.stopProcess(procName)
 end
