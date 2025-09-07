@@ -110,8 +110,12 @@ end
 
 --- Renders the given PNG file onto the screen
 --- @param imageFile string Path to PNG image
-function eips.render(imageFile)
-    os.execute('eips -g "' .. imageFile .. '" >/dev/null')
+--- @param degauss boolean If set, refreshes the whole screen
+function eips.render(imageFile, degauss)
+    local cmd = "eips "
+    if degauss then cmd = cmd .. " -f" end
+    cmd = cmd .. ' -g "' .. imageFile .. '" >/dev/null'
+    os.execute(cmd)
 end
 
 return eips
