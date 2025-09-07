@@ -168,4 +168,11 @@ while true do
     print("Refresh would happen after", refreshRate, "seconds")
     os.exit(0)
 
+    -- Go to sleep
+    kindle.smartSleep(
+        refreshRate,
+        function() eips.drawxy(0, 0, 8, 8, 0) end,
+        function() eips.flash(0, 0, 8, 8) end,
+        function(hostname) eips.printc(29, hostname .. " not pingable. Retrying...") end
+    )
 end

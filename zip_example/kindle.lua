@@ -3,6 +3,7 @@
 ]]
 
 local kindle = {}
+local utils = require("utils")
 
 -- https://github.com/koreader/koreader/blob/c4f9c60742409c8edb2f13c50bbb7ab8d9997218/platform/kindle/koreader.sh#L284-L287
 kindle.stopServices = {
@@ -16,6 +17,9 @@ kindle.stopProcesses = {
 
 ---@type integer
 kindle._maxBrightnessCache = nil
+
+---@type string
+kindle._defaultGatewayCache = nil
 
 --- Returns the maximum brightness level allowed on this Kindle
 --- @return integer # Maximum brightness level
@@ -99,6 +103,73 @@ function kindle.getBatteryVoltage()
     batteryVoltage = batteryVoltage / 1000000
     f:close()
     return batteryVoltage
+end
+
+--- Hibernate for the given number of seconds
+--- @param seconds integer
+function kindle.deepSleep(seconds)
+    -- Clear any existing wakealarm
+    local f = io.open("/sys/class/rtc/rtc1/wakealarm", "w")
+    f:write("0")
+    f:close()
+
+    -- Set new wakealarm as relative timestamp
+    f = io.open("/sys/class/rtc/rtc1/wakealarm", "w")
+    f:write("+" .. tostring(seconds))
+    f:close()
+
+    -- Hibernate!
+    f = io.open("/sys/power/state")
+    f:write("mem")
+    f:close()
+end
+
+--- Delays execution for the specified number of seconds, either using the normal `sleep`
+--- command, or by turning off WiFi, hibernating the CPU and turning WiFi back on afterwards
+--- @param seconds integer Number of seconds to sleep
+--- @param wakeCallback function|nil Callback to call() after waking up
+--- @param pingCallback function|nil Callback to call() on each ping
+--- @param errorCallback function|nil Callback to call(hostname) on reconnection error
+function kindle.smartSleep(seconds, wakeCallback, pingCallback, errorCallback)
+    if seconds < 60 then
+        utils.sleep(seconds)
+        if wakeCallback then wakeCallback() end
+    else
+        -- Get default gateway (for pinging later) while connection is still good
+        if not kindle._defaultGatewayCache then
+            local cmd = "route -n | grep UG | awk '{printf \"%s\",$2}'"
+            local handle = io.popen(cmd)
+            kindle._defaultGatewayCache = handle:read("*a")
+            handle:close()
+        end
+
+        kindle.disableWifi()
+
+        -- Shorten deep sleep to account for WiFi reconnection time
+        seconds = seconds - 8
+
+        kindle.deepSleep(seconds)
+
+        if wakeCallback then wakeCallback() end
+
+        kindle.enableWifi()
+
+        -- Wait for Wifi to reacquire signal
+        utils.sleep(3)
+
+        repeat
+            -- Try to ping host up to 20 times, flash indicator between tries
+            local pingResult = utils.pingWait(kindle._defaultGatewayCache, 20, pingCallback)
+            if not pingResult then
+                if errorCallback then errorCallback(kindle._defaultGatewayCache) end
+                -- Toggle WiFi just to make sure we have a connection
+                kindle.disableWifi()
+                utils.sleep(1)
+                kindle.enableWifi()
+            end
+        until pingResult
+
+    end
 end
 
 return kindle
