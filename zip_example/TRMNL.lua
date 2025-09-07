@@ -96,27 +96,7 @@ utils.printTable(config)
 
 local impressions = 0
 while true do
-    -- Indicate that we're alive
-    eips.drawxy(0, 0, 8, 8, 0)
-
-    kindle.enableWifi()
-
-    -- Wait for Wifi to reacquire signal
-    utils.sleep(3)
-
-    repeat
-        -- Try to ping host up to 20 times, flash indicator between tries
-        local pingResult = utils.pingWait(config.BASE_HOST, 20, function() eips.flash(0, 0, 8, 8) end)
-        if not pingResult then
-            eips.printc(29, config.BASE_HOST .. " not pingable. Retrying...")
-            -- Toggle WiFi just to make sure we have a connection
-            kindle.disableWifi()
-            utils.sleep(1)
-            kindle.enableWifi()
-        end
-    until pingResult
-
-    -- Indicate successful connection
+    -- Indicate start of server query
     eips.drawxy(0, 12, 8, 8, 0)
 
     -- Load next image metadata from TRMNL server
