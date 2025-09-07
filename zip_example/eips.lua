@@ -108,5 +108,10 @@ function eips.printlog(text, inverse)
     print("[LOG] " .. text)   -- also output to console
 end
 
+--- Renders the given PNG file onto the screen
+--- @param imageFile string Path to PNG image
+function eips.render(imageFile)
+    os.execute('eips -g "' .. imageFile .. '" >/dev/null')
+end
 
 return eips

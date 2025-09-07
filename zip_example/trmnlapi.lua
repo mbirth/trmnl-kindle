@@ -98,4 +98,21 @@ function Trmnl:getDisplayInfo()
     return result
 end
 
+--- Download image file according to provided displayInfo
+--- @param displayInfo table Output from Trmnl:getDisplayInfo()
+--- @return string|nil Path to downloaded file (or nil on error)
+function Trmnl:downloadImage(displayInfo)
+    local imageUrl = displayInfo["image_url"]
+    local localFile = self.TMP_DIR .. "/display.png"
+
+    local cmd = "curl -L -s"
+    cmd = cmd .. ' -H "Accept: image/png"'
+    cmd = cmd .. ' -A "' .. self.USER_AGENT .. '" -o "' .. localFile .. '" "' .. imageUrl .. '"'
+
+    local exitcode = os.execute(cmd)
+
+    if exitcode > 0 then return nil end
+    return localFile
+end
+
 return TrmnlFactory

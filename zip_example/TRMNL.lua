@@ -93,6 +93,7 @@ local trmnl = TrmnlApi.new(config.BASE_URL, config.API_KEY, config.MAC_ADDRESS)
 trmnl:setDisplayDimensions(displayInfo.yres, displayInfo.xres, 90)   -- swap width/height and set 90deg rotation
 trmnl:setBatteryCapacityCallback(function() return kindle.getBatteryPercent() end)
 trmnl:setBatteryVoltageCallback(function() return kindle.getBatteryVoltage() end)
+trmnl:setTempDir(config.TMP_DIR)
 
 -- Flash Splash box
 eips.flash(336, 288, 386, 216)
@@ -136,13 +137,35 @@ while true do
         -- Indicate successful query
         eips.drawxy(0, 24, 8, 8, 0)
 
+        refreshRate = dispInfo["refresh_rate"]
 
+        -- Download remote file to local
+        local imagePath = trmnl:downloadImage(dispInfo)
 
+        if imagePath then
 
+            -- Render image
+            eips.render(imagePath)
+
+            -- Degauss/redraw screen if reached configured amount of impressions
+            impressions = impressions + 1
+            if impressions >= config.DEGAUSS_AFTER then
+                eips.degauss()
+                impressions = 0
+            end
+
+        else
+            eips.printc(22, "ERROR: Image not downloaded. Retry in 10s...", true)
+            eips.printc(23, dispInfo["image_url"])
+            refreshRate = 10
+        end
+    else
+        eips.printc(22, "ERROR: Empty answer from server. Retry in 60s...", true)
+        refreshRate = 60
     end
 
-
     -- DEBUG: STOP
+    print("Refresh would happen after", refreshRate, "seconds")
     os.exit(0)
 
 end
