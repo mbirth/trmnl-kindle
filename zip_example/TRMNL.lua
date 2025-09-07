@@ -10,6 +10,7 @@
 ]]
 
 -- Resources:
+-- https://www.lua.org/manual/5.1/manual.html
 -- https://www.mobileread.com/forums/showthread.php?t=272221
 
 local eips = require("eips")
@@ -96,7 +97,7 @@ eips.printlog("All done. Starting main loop...")
 eips.clearScreen()
 
 -- DEBUG:
-utils.printtable(config)
+utils.printTable(config)
 
 local impressions = 0
 while true do

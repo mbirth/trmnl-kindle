@@ -15,7 +15,7 @@ end
 
 --- Prints all members of a table and their values
 --- @param tbl table Table to print
-function utils.printtable(tbl)
+function utils.printTable(tbl)
     for k, v in pairs(tbl) do
         print(k .. " = " .. v)
     end
@@ -32,7 +32,7 @@ end
 --- Pings the given host until reachable or the number of retries is reached
 --- @param hostname string Hostname to ping
 --- @param tries integer Number of tries (Default: 1)
---- @param callback function Callback to run after each unsuccessful ping
+--- @param callback function|nil Callback to run after each unsuccessful ping
 --- @return boolean # TRUE if host was reached, FALSE if host wasn't reachable
 function utils.pingWait(hostname, tries, callback)
     tries = tries or 1

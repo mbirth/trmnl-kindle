@@ -80,10 +80,10 @@ end
 
 --- Returns the battery capacity in percent
 --- @return integer
+--- @diagnostic disable: assign-type-mismatch, return-type-mismatch
 function kindle.getBatteryPercent()
     ---@type file*
     local f = io.input("/sys/class/power_supply/bd71827_bat/capacity")
-    ---@type integer
     local batteryPercent = tonumber(f:read("*a"))
     f:close()
     return batteryPercent
@@ -91,10 +91,10 @@ end
 
 --- Returns the battery voltage
 --- @return number
+--- @diagnostic disable: assign-type-mismatch, return-type-mismatch
 function kindle.getBatteryVoltage()
     ---@type file*
     local f = io.input("/sys/class/power_supply/bd71827_bat/voltage_now")
-    ---@type number
     local batteryVoltage = tonumber(f:read("*a"))
     batteryVoltage = batteryVoltage / 1000000
     f:close()
