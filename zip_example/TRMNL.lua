@@ -62,13 +62,13 @@ kindle.disableScreensaver()
 -- Stop Kindle services
 for _, svcName in ipairs(kindle.stopServices) do
 	eips.printlog("Stopping service " .. svcName .. "...")
-    -- kindle.stopService(svcName)
+    kindle.stopService(svcName)
 end
 
 -- Stop Kindle processes
 for _, procName in ipairs(kindle.stopProcesses) do
 	eips.printlog("Stopping process " .. procName .. "...")
-    -- kindle.stopProcess(procName)
+    kindle.stopProcess(procName)
 end
 
 eips.printlog("Setting display frontlight brightness to " .. config.BRIGHTNESS .. "...")
@@ -134,8 +134,8 @@ while true do
     end
 
     -- DEBUG: STOP
-    print("Refresh would happen after", refreshRate, "seconds")
-    os.exit(0)
+    -- print("Refresh would happen after", refreshRate, "seconds")
+    -- os.exit(0)
 
     -- Go to sleep
     kindle.smartSleep(
