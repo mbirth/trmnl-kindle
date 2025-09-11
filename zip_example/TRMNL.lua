@@ -133,10 +133,6 @@ while true do
         refreshRate = 60
     end
 
-    -- DEBUG: STOP
-    -- print("Refresh would happen after", refreshRate, "seconds")
-    -- os.exit(0)
-
     -- Go to sleep
     kindle.smartSleep(
         refreshRate,

@@ -115,10 +115,8 @@ function kindle.deepSleep(seconds)
     f:write("+" .. tostring(seconds))
     f:close()
 
-    -- Hibernate!
-    f = io.open("/sys/power/state")
-    f:write("mem")
-    f:close()
+    -- Hibernate! (for some reason, using io.open() + f:write() doesn't work here!)
+    os.execute('echo "mem" > /sys/power/state')
 end
 
 --- Delays execution for the specified number of seconds, either using the normal `sleep`
@@ -143,7 +141,7 @@ function kindle.smartSleep(seconds, wakeCallback, pingCallback, errorCallback)
         kindle.disableWifi()
 
         -- Shorten deep sleep to account for WiFi reconnection time
-        seconds = seconds - 8
+        seconds = seconds - 4
 
         kindle.deepSleep(seconds)
 
@@ -165,6 +163,11 @@ function kindle.smartSleep(seconds, wakeCallback, pingCallback, errorCallback)
                 kindle.enableWifi()
             end
         until pingResult
+
+        -- NOTE: WiFi reconnect occasionally takes a few seconds longer.
+        --       If you need exact timing, you'd need to shorten the deep sleep time and then
+        --       calculate the remaining sleep time here and sleep for another few seconds until
+        --       the desired sleep time has been reached.
 
     end
 end
