@@ -141,11 +141,17 @@ function kindle.smartSleep(seconds, wakeCallback, pingCallback, errorCallback)
         kindle.disableWifi()
 
         -- Shorten deep sleep to account for WiFi reconnection time
-        seconds = seconds - 4
+        seconds = seconds - 9
+
+        -- Some time to settle down before hibernating
+        utils.sleep(2)
 
         kindle.deepSleep(seconds)
 
         if wakeCallback then wakeCallback() end
+
+        -- Some time to wake up after hibernating
+        utils.sleep(1)
 
         kindle.enableWifi()
 
