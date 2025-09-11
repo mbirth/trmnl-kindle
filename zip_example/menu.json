@@ -5,7 +5,12 @@
       "priority": -10,
       "items": [
         {
-          "name": "Start TRMNL",
+          "name": "Start TRMNL (Lua)",
+          "priority": 100,
+          "action": "./TRMNL_Lua.sh"
+        },
+        {
+          "name": "Start TRMNL (Shell)",
           "priority": 100,
           "action": "./TRMNL.sh"
         }

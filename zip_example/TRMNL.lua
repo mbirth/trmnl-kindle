@@ -22,7 +22,7 @@ eips.print(28, 17, string.rep(" ", 32), true)
 eips.print(29, 17, "  Stopping Kindle Framework...  ", true)
 eips.print(30, 17, string.rep(" ", 32), true)
 
--- kindle.stopFramework()
+kindle.stopFramework()
 
 eips.clearScreen()
 

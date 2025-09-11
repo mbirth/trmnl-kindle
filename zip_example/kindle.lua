@@ -53,7 +53,7 @@ end
 --- Stops the Kindle Framework job
 function kindle.stopFramework()
     -- The framework job sends a SIGTERM on stop, trap it so we don't get killed
-    os.execute('trap "" TERM; stop lab126_gui; usleep 1250000; trap - TERM')
+    os.execute('stop lab126_gui')
 end
 
 --- Disables the built-in screensaver so the device doesn't go to sleep after a timeout
