@@ -110,7 +110,7 @@ end
 
 --- Renders the given PNG file onto the screen
 --- @param imageFile string Path to PNG image
---- @param degauss boolean If set, refreshes the whole screen
+--- @param degauss boolean|nil If set, refreshes the whole screen
 function eips.render(imageFile, degauss)
     local cmd = "eips "
     if degauss then cmd = cmd .. " -f" end
