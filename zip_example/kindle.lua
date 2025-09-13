@@ -130,6 +130,9 @@ function kindle.smartSleep(seconds, wakeCallback, pingCallback, errorCallback)
         utils.sleep(seconds)
         if wakeCallback then wakeCallback() end
     else
+        -- Time we want to leave this routine again
+        local targetStamp = os.time() + seconds
+
         -- Get default gateway (for pinging later) while connection is still good
         if not kindle._defaultGatewayCache then
             local cmd = "route -n | grep UG | awk '{printf \"%s\",$2}'"
@@ -173,7 +176,7 @@ function kindle.smartSleep(seconds, wakeCallback, pingCallback, errorCallback)
         -- NOTE: WiFi reconnect occasionally takes a few seconds longer.
         --       If you need exact timing, you'd need to shorten the deep sleep time and then
         --       calculate the remaining sleep time here and sleep for another few seconds until
-        --       the desired sleep time has been reached.
+        --       the desired sleep time (targetStamp) has been reached.
 
     end
 end
