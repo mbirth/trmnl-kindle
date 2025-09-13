@@ -13,7 +13,14 @@ Tested on 10th gen, 12th gen Kindle e-ink displays.
 > (`moonshine`) running firmware **5.15.1.1**. It may not work properly on
 > other Kindles or 10th gen Kindles with a different firmware version.
 >
+> Here's a graph of the battery discharge between the original TRMNL.sh implementation
+> and my optimised one when doing a refresh every 30 seconds. The Lua version is similarly
+> efficient.
+>
 > ![Battery discharge comparison](/images/discharge-curve.png)
+>
+> I assume this will allow the Kindle to do about 4,000 refreshes on a single charge
+> of the built-in battery.
 
 
 Prerequisites
