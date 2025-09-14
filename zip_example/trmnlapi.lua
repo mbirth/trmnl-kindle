@@ -94,7 +94,11 @@ function Trmnl:getDisplayInfo()
 
     if output == "" then return nil end
 
-    local result = json.decode(output)
+    local status, result = pcall(json.decode, output)
+    if not status then
+        print("ERROR processing JSON: ", result)
+        return nil
+    end
     return result
 end
 

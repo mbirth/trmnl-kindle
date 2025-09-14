@@ -129,7 +129,7 @@ while true do
             refreshRate = 10
         end
     else
-        eips.printc(22, "ERROR: Empty answer from server. Retry in 60s...", true)
+        eips.printc(22, "ERROR: Bad answer from server. Retry in 60s...", true)
         refreshRate = 60
     end
 
